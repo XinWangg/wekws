@@ -2,21 +2,20 @@
 # Copyright 2021  Binbin Zhang(binbzha@qq.com)
 
 . ./path.sh
-
 stage=$1
 stop_stage=$2
-num_keywords=2
+num_keywords=11
 
 config=conf/ds_tcn.yaml
-norm_mean=true
-norm_var=true
+norm_mean=false
+norm_var=false
 gpus="0,1"
 
 checkpoint=
-dir=exp/ds_tcn
+dir=exp/ds_tcn_small_64dim
 
 num_average=30
-score_checkpoint=$dir/avg_${num_average}.pt
+score_checkpoint=$dir/5.pt
 
 download_dir=./data/local # your data dir
 
@@ -124,10 +123,10 @@ fi
 if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
   jit_model=$(basename $score_checkpoint | sed -e 's:.pt$:.zip:g')
   onnx_model=$(basename $score_checkpoint | sed -e 's:.pt$:.onnx:g')
-  python wekws/bin/export_jit.py \
-    --config $dir/config.yaml \
-    --checkpoint $score_checkpoint \
-    --jit_model $dir/$jit_model
+  # python wekws/bin/export_jit.py \
+  #   --config $dir/config.yaml \
+  #   --checkpoint $score_checkpoint \
+  #   --jit_model $dir/$jit_model
   python wekws/bin/export_onnx.py \
     --config $dir/config.yaml \
     --checkpoint $score_checkpoint \

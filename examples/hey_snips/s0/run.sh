@@ -4,13 +4,13 @@
 
 . ./path.sh
 
-stage=0
+stage=-1
 stop_stage=4
 num_keywords=1
 
 config=conf/ds_tcn.yaml
-norm_mean=true
-norm_var=true
+norm_mean=false
+norm_var=false
 gpus="0"
 
 checkpoint=
